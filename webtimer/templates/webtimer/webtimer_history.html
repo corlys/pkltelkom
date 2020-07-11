@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	<h1>Maintenance</h1>
+	<ul>
+	{% for item in objects %}
+
+		<li>{{item.webtimer.title}} waktu buka {{item.loadtime}} kapan buka {{item.captured_date}}</li>
+
+	{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}
