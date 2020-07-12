@@ -21,7 +21,7 @@
 			</button>
 		</div>
 		<div class="col s12"></div>
-		<div class="col s12 center-align loading"><img src="{% static '/images/ajax-loader.gif' %}"></div>
+		<div class="col s12 center-align loading"><img src="{% static '/images/loading.svg' %}"></div>
 		<div class="row" id="speedresult">
 			<div class="col s4"><p id="download"></p></div>
 			<div class="col s4"><p id="upload"></p></div>
@@ -44,7 +44,7 @@
 				data:{'server': server_id},
 				dataType:'json',
 				success: function (data){
-					console.log('success')
+					console.log(data)
 					$('.loading').hide();
 					$('#speedresult').show();
 					$('#download').text('download: '+data.download);

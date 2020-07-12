@@ -1,11 +1,12 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.core import serializers
 
 from .models import *
 
 # from .forms import WebtimerForm, RawWebtimerForm
 
 # WebVisit.py Danar
-import speedtest
 
 # from selenium import webdriver
 # from selenium.webdriver.support.ui import WebDriverWait
@@ -18,9 +19,11 @@ def web_timer_home_view(request):
 	# w_driver = r"\geckodriver.exe"
 	# PATH = r"C:\Users\Duscae\Documents\Python Scripts"
 	# driver = webdriver.Firefox()
+
 	obj = Webtimer.objects.all()
 	loadtime_counter(obj);
-	test = speedtest.Speedtest()
+
+
 	# for link in obj:
 	#     try:
 	#         driver.get(link.urls)
@@ -42,6 +45,16 @@ def web_timer_home_view(request):
 		'objects' : obj
 	}
 	return render(request, 'webtimer/webtimer_home.html', context)
+
+def request_home(request):
+	obj = Webtimer.objects.all()
+	loadtime_counter(obj);
+
+	data = serializers.serialize('json', obj)
+
+	return HttpResponse(data, content_type="application/json")
+
+
 
 def web_timer_history_view(request):
 	obj = History.objects.all()

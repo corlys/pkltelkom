@@ -11,7 +11,7 @@ main {
 
 /*home*/
 
-.featured-web{
+.first-load .featured-web{
 	display: flex;
 	flex-flow: row wrap;
 }

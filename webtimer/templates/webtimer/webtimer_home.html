@@ -15,16 +15,15 @@
 	<div class="row">
 		<div class="featured-web">
 			{% for item in objects %}
-			<div class="col s12 m4">
-				<!-- <h2 class="header">{{item.title}}</h2> -->
-				<div class="card horizontal">
+			<div class="col s12 m4 timeboxes">
+				<div class="card horizontal hoverable">
 					<div class="card-image">
+						<!-- <img class="responsive-img loading" src="{% static '/images/loading.svg' %}"> -->
 						<img class="responsive-img" src="{% static '/images/icons/'|add:item.title|add:'.png' %}">
 					</div>
 					<div class="card-stacked">
 						<div class="card-content">
-							<!-- <p>I am a very simple card. I am good at containing small bits of information.</p> -->
-							<h3>{{item.time}}</h3>
+							<h4>{{item.time}} Sec</h4>
 						</div>
 						<div class="card-action">
 							<a target="_blank" href="{{item.urls}}">{{item.title}}</a>
@@ -36,5 +35,24 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	// $(function(){
+	// 	$.ajax({
+	// 		url:'/request_home',
+	// 		data:{},
+	// 		dataType:'json',
+	// 		success: function (data){
+	// 			var dir = "../../../"
+	// 			$('.timeboxes').hide()
+	// 			$.each(data, function(i, item){
+	// 				console.log(item.fields.title)
+	// 			});
+	// 			// $('.card-stacked').append("<div class='card-content'><h5>"++"</h5></div>");
+	// 			// console.log(data[1].fields.title);
+	// 		}
+	// 	});
+	// });
+</script>
 
 {% endblock %}

@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view
+from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home
 from netvelotest.views import netvelocity_view, speed_count
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', web_timer_home_view),
+    path('request_home/', request_home),
     # path('web-create/', web_detail_create_view),
     path('web-detail/', web_detail_view),
     path('web-history/', web_timer_history_view),
