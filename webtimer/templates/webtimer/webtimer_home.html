@@ -1,15 +1,40 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 <div class="container">
-	<h1>Maintenance</h1>
-	<ul>
-	{% for item in objects %}
+	<h1 class="center-align">Maintenance</h1>
+<!-- 	<ul>
+		{% for item in objects %}
 
 		<li>{{item.title}} waktu buka {{item.time}}</li>
 
-	{% endfor %}
-	</ul>
+		{% endfor %}
+	</ul> -->
+	<div class="row">
+		<div class="featured-web">
+			{% for item in objects %}
+			<div class="col s12 m4">
+				<!-- <h2 class="header">{{item.title}}</h2> -->
+				<div class="card horizontal">
+					<div class="card-image">
+						<img class="responsive-img" src="{% static '/images/icons/'|add:item.title|add:'.png' %}">
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<!-- <p>I am a very simple card. I am good at containing small bits of information.</p> -->
+							<h3>{{item.time}}</h3>
+						</div>
+						<div class="card-action">
+							<a target="_blank" href="{{item.urls}}">{{item.title}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
 </div>
 
 {% endblock %}

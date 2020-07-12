@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
 <div class="container">
@@ -18,8 +20,9 @@
 				<i class="material-icons right">send</i>
 			</button>
 		</div>
-		<div class="col s12 center-align hide" id="loading">loading button</div>
-		<div class="row hide" id="speedresult">
+		<div class="col s12"></div>
+		<div class="col s12 center-align loading"><img src="{% static '/images/ajax-loader.gif' %}"></div>
+		<div class="row" id="speedresult">
 			<div class="col s4"><p id="download"></p></div>
 			<div class="col s4"><p id="upload"></p></div>
 			<div class="col s4"><p id="ping"></p></div>
@@ -29,25 +32,30 @@
 </div>
 
 <script type="text/javascript">
-	$('select').formSelect();
-	$('#speedtest').click(function(){
-		var server_id = $('select').val();
-		$('#loading').show();
-		$.ajax({
-			url:'/speedtest/speed_count',
-			data:{'server': server_id},
-			dataType:'json',
-			success: function (data){
-				console.log('success')
-				$('#loading').hide();
-				$('#speedresult').show();
-				$('#download').text(data.download);
-				$('#upload').text(data.upload);
-				$('#ping').text(data.ping);
-				$('#isp').text(data.isp);
-			}
+	$(function(){
+		$('select').formSelect();
+		$('#speedresult').hide()
+		$('.loading').hide()
+		$('#speedtest').click(function(){
+			var server_id = $('select').val();
+			$('.loading').show();
+			$.ajax({
+				url:'/speedtest/speed_count',
+				data:{'server': server_id},
+				dataType:'json',
+				success: function (data){
+					console.log('success')
+					$('.loading').hide();
+					$('#speedresult').show();
+					$('#download').text('download: '+data.download);
+					$('#upload').text('upload: '+data.upload);
+					$('#ping').text('ping: '+data.ping);
+					$('#isp').text('isp: '+data.isp);
+				}
+			});
 		});
-	})
+	});
+	
 	
 </script>
 
