@@ -57,9 +57,11 @@ def request_home(request):
 
 def web_timer_history_view(request):
 	obj = History.objects.all()
+	objects = Webtimer.objects.all()
 
 	context = {
-		'objects':obj
+		'hist':obj,
+		'web':objects
 	}
 
 	return render(request, "webtimer/webtimer_history.html", context)

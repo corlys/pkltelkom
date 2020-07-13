@@ -2,14 +2,64 @@
 
 {% block content %}
 <div class="container">
-	<h1>Maintenance</h1>
-	<ul>
-	{% for item in objects %}
+	<h1>Website History</h1>
 
-		<li>{{item.webtimer.title}} waktu buka {{item.loadtime}} kapan buka {{item.captured_date}}</li>
-
-	{% endfor %}
-	</ul>
+	<div class="row">
+		<div class="web-history">
+			{% for item in web %}
+			<div class="col s12 m12">
+				<div class="{{item.title}}-chart">
+					<label>{{item.title}}</label>
+					<canvas id="{{item.title}}Chart" width="400" height="400"></canvas>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>	
 </div>
+
+<script type="text/javascript">
+	$(function(){
+		{% for item in web %}
+		var ctx = document.getElementById('{{item.title}}Chart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.captured_date}}',{% endif %}{% endfor %}],
+				datasets: [{
+					label: '# Seconds',
+					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.loadtime}}',{% endif %}{% endfor %}],
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		{% endfor %}
+	});
+</script>
 
 {% endblock %}
