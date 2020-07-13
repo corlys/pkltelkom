@@ -47,7 +47,7 @@
 			data: {
 				labels: [{% for item in objects %}'{{item.title}}',{% endfor %}],
 				datasets: [{
-					label: '# of Votes',
+					label: '# Seconds',
 					data: [{% for item in objects %}'{{item.time}}',{% endfor %}],
 					backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',

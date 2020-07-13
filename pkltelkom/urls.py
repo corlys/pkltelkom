@@ -21,11 +21,11 @@ from netvelotest.views import netvelocity_view, speed_count
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', web_timer_home_view),
+    path('', web_timer_home_view, name="homepage"),
     path('request_home/', request_home),
     # path('web-create/', web_detail_create_view),
     path('web-detail/', web_detail_view),
-    path('web-history/', web_timer_history_view),
-    path('speedtest/', netvelocity_view),
+    path('web-history/', web_timer_history_view, name="history"),
+    path('speedtest/', netvelocity_view, name="speedtest"),
     path('speedtest/speed_count', speed_count),
 ]

@@ -7,9 +7,9 @@
 				<i class="material-icons">menu</i>
 			</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#">Web Timer</a></li>
+				<li><a href="{% url 'homepage' %}">Web Timer</a></li>
 
-				<li><a href="#">Speed Test</a></li>
+				<li><a href="{% url 'speedtest' %}">Speed Test</a></li>
 
 				<li><a href="#">Login</a></li>
 			</ul>
@@ -17,8 +17,8 @@
 	</nav>
 
 	<ul class="sidenav" id="mobile-links">
-		<li><a href="#">Web Timer</a></li>
-		<li><a href="#">Speed Test</a></li>
+		<li><a href="{% url 'homepage' %}">Web Timer</a></li>
+		<li><a href="{% url 'speedtest' %}">Speed Test</a></li>
 		<li><a href="#">Login</a></li>
 	</ul>	
 </header>
