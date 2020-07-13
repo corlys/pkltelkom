@@ -21,7 +21,6 @@ def web_timer_home_view(request):
 	# driver = webdriver.Firefox()
 
 	obj = Webtimer.objects.all()
-	loadtime_counter(obj);
 
 
 	# for link in obj:

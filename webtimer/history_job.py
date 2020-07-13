@@ -24,5 +24,5 @@ def loadtime_counter(links):
 		finally:
 			link.time = elapsed_time
 			link.save()
-			new_history = History(webtimer = link, loadtime = elapsed_time)
+			new_history = History(webtimer = link, loadtime = link.time)
 			new_history.save()

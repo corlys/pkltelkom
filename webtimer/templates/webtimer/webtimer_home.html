@@ -23,7 +23,7 @@
 					</div>
 					<div class="card-stacked">
 						<div class="card-content">
-							<h4>{{item.time}} Sec</h4>
+							<h5>{{item.time}} Sec</h5>
 						</div>
 						<div class="card-action">
 							<a target="_blank" href="{{item.urls}}">{{item.title}}</a>
@@ -33,10 +33,56 @@
 			</div>
 			{% endfor %}
 		</div>
+		<div class="home-chart">
+			<canvas id="myChart" width="400" height="400"></canvas>
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
+	$(function(){
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: [{% for item in objects %}'{{item.title}}',{% endfor %}],
+				datasets: [{
+					label: '# of Votes',
+					data: [{% for item in objects %}'{{item.time}}',{% endfor %}],
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+	});
+
+
+
+
 	// $(function(){
 	// 	$.ajax({
 	// 		url:'/request_home',

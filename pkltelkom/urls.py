@@ -21,7 +21,7 @@ from netvelotest.views import netvelocity_view, speed_count
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', web_timer_home_view),
+    path('', web_timer_home_view),
     path('request_home/', request_home),
     # path('web-create/', web_detail_create_view),
     path('web-detail/', web_detail_view),
