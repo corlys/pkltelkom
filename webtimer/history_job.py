@@ -1,4 +1,4 @@
-import urllib.request as urllib2
+from urllib.request import urlopen
 from time import time
 
 from .models import History, Webtimer
@@ -15,8 +15,8 @@ def update_history():
 def loadtime_counter(links):
 	for link in links:
 		try:
-			stream = urllib2.urlopen(link.urls)
 			start_time = time()
+			stream = urlopen(link.urls)
 			output = stream.read()
 			end_time = time()
 			stream.close()
