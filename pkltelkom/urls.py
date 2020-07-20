@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home
+from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home, loginPage, logoutUser, registerPage
 from netvelotest.views import netvelocity_view, speed_count
 
 urlpatterns = [
@@ -27,5 +27,8 @@ urlpatterns = [
     path('web-detail/', web_detail_view),
     path('web-history/', web_timer_history_view, name="history"),
     path('speedtest/', netvelocity_view, name="speedtest"),
-    path('speedtest/speed_count', speed_count),
+    # path('speedtest/speed_count', speed_count),
+    path('login/', loginPage, name='login'),
+    path('logout/', logoutUser, name='logout'),
+    path('register/', registerPage, name='register'),
 ]

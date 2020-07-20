@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core import serializers
 
 from .models import *
-
+from .forms import CreateUserForm
 # from .forms import WebtimerForm, RawWebtimerForm
 
 # WebVisit.py Danar
@@ -15,6 +18,7 @@ import urllib.request as urllib2
 from time import time
 
 # Create your views here.
+@login_required(login_url='login')
 def web_timer_home_view(request):
 	# w_driver = r"\geckodriver.exe"
 	# PATH = r"C:\Users\Duscae\Documents\Python Scripts"
@@ -54,7 +58,7 @@ def request_home(request):
 	return HttpResponse(data, content_type="application/json")
 
 
-
+@login_required(login_url='login')
 def web_timer_history_view(request):
 	obj = History.objects.all()
 	objects = Webtimer.objects.all()
@@ -120,3 +124,41 @@ def loadtime_counter(links):
 		finally:
 			link.time = elapsed_time
 			link.save()
+
+def loginPage(request):
+	if request.user.is_authenticated:
+		return redirect('homepage')
+	else:
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			password = request.POST.get('password')
+
+			user = authenticate(request, username=username, password=password)
+
+			if user is not None:
+				login(request, user)
+				return redirect('homepage')
+			else:
+				messages.info(request, 'Username or Password is incorrect')
+
+		context = {}
+		return render(request, 'webtimer/login.html', context)
+
+def logoutUser(request):
+	logout(request)
+	return redirect('login')
+
+def registerPage(request):
+	if request.user.is_authenticated:
+		return redirect('homepage')
+	else:
+		form = CreateUserForm()
+		if request.method == 'POST':
+			form = CreateUserForm(request.POST)
+			if form.is_valid():
+				form.save()
+				user = form.cleaned_data.get('username')
+				messages.success(request, 'Account was created for '+ user)
+				return redirect('login')
+		context = {"form":form}
+		return render(request, 'webtimer/register.html', context)

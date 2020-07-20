@@ -2,12 +2,15 @@ import speedtest as st
 
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+
 
 from .models import Netvelocity
 
 
 
 # Create your views here.
+@login_required(login_url='login')
 def netvelocity_view(request):
 	obj = Netvelocity.objects.all()
 
