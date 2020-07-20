@@ -3,21 +3,17 @@
 {% load static %}
 
 {% block content %}
-<div class="parallax-container">
-	<div class="parallax"><img src="http://materializecss.com/templates/parallax-template/background1.jpg"></div>
-</div>
+<!-- <div class="parallax-container">
+	<div class="parallax" style="z-index: 15;"><img src="http://materializecss.com/templates/parallax-template/background1.jpg"></div>
+</div> -->
+<div class="title">
+	<h1 class="center-align">Loadtime Counter</h1>
+</div>	
 <div class="container">
-	<h1 class="center-align">Maintenance</h1>
-<!-- 	<ul>
-		{% for item in objects %}
-
-		<li>{{item.title}} waktu buka {{item.time}}</li>
-
-		{% endfor %}
-	</ul> -->
 	<div class="row">
 		<div class="featured-web">
 			{% for item in objects %}
+			{% if item.featured %}
 			<div class="col s12 m4 l6 timeboxes">
 				<div class="card horizontal hoverable">
 					<div class="card-image">
@@ -34,6 +30,7 @@
 					</div>
 				</div>
 			</div>
+			{% endif %}
 			{% endfor %}
 		</div>
 		<div class="home-chart">
@@ -55,16 +52,14 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('.parallax').parallax();
-		$('.fixed-action-btn').floatingActionButton();
 		var ctx = document.getElementById('myChart').getContext('2d');
 		var myChart = new Chart(ctx, {
 			type: 'bar',
 			data: {
-				labels: [{% for item in objects %}'{{item.title}}',{% endfor %}],
+				labels: [{% for item in objects %}{% if item.featured %}'{{item.title}}',{% endif %}{% endfor %}],
 				datasets: [{
 					label: '# Seconds',
-					data: [{% for item in objects %}'{{item.time}}',{% endfor %}],
+					data: [{% for item in objects %}{% if item.featured %}'{{item.time}}',{% endif %}{% endfor %}],
 					backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',

@@ -24,6 +24,10 @@ main {
 }
 
 /*home*/
+/*.title{
+	margin-top: 0px;
+}*/
+
 .first-load, .featured-web{
 	display: flex;
 	flex-flow: row wrap;

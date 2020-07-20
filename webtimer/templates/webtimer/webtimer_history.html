@@ -2,11 +2,12 @@
 
 {% block content %}
 <div class="container">
-	<h1 class="center-align">Website History</h1>
+	<h1 class="center-align">History</h1>
 
 	<div class="row">
 		<div class="web-history">
 			{% for item in web %}
+			{% if item.featured %}
 			<div class="col s12 m6">
 				<div class="card hoverable">
 					<div class="card-content">
@@ -18,6 +19,7 @@
 					</div>
 				</div>
 			</div>
+			{% endif %}
 			{% endfor %}
 		</div>
 	</div>
@@ -36,9 +38,11 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('.fixed-action-btn').floatingActionButton();
 		{% for item in web %}
 		{% if item.featured %}
+		var randomR = Math.floor((Math.random() * 130) + 100);
+		var randomG = Math.floor((Math.random() * 130) + 100);
+		var randomB = Math.floor((Math.random() * 130) + 100);
 		var ctx = document.getElementById('{{item.title}}Chart').getContext('2d');
 		var myChart = new Chart(ctx, {
 			type: 'line',
@@ -46,7 +50,11 @@
 				labels: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
 				datasets: [{
 					label: '# Seconds',
-					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.loadtime}}',{% endif %}{% endfor %}]
+					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.loadtime}}',{% endif %}{% endfor %}],
+					backgroundColor:"rgb(" 
+            + (randomR - 80) + ", " 
+            + (randomG - 80) + ", " 
+            + (randomB - 80) + ", 0.4)",
 				}]
 			},
 			options: {
