@@ -1,24 +1,46 @@
+/* MaterializeCSS footer to stick to the bottom */
 
 body {
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
+	font-family: 'Roboto Condensed', sans-serif;
 }
 main {
 	flex: 1 0 auto;
 }
 
+/* NAVBAR */
+
+.brand-logo h5{
+	color: white;
+	height: : 100%;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 200;
+}
+
+.brand-logo h5 span{
+	font-weight: 800;
+}
 
 /*home*/
-
-.first-load .featured-web{
+.first-load, .featured-web{
 	display: flex;
 	flex-flow: row wrap;
 }
 
-/*web-history*/
-
+/*history*/
 .web-history{
 	display: flex;
+	justify-content: space-around;
 	flex-flow: row wrap;
+}
+
+.full-width{
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
 }
