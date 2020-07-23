@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.core import serializers
 
 from .models import *
 from .forms import CreateUserForm
+from .decorators import unauthenticated_user
 # from .forms import WebtimerForm, RawWebtimerForm
 
 # WebVisit.py Danar
@@ -45,7 +47,7 @@ def web_timer_home_view(request):
 	# driver.close()
 
 	context = {
-		'objects' : obj
+		'objects' : obj,
 	}
 	return render(request, 'webtimer/webtimer_home.html', context)
 
@@ -125,40 +127,39 @@ def loadtime_counter(links):
 			link.time = elapsed_time
 			link.save()
 
+@unauthenticated_user
 def loginPage(request):
-	if request.user.is_authenticated:
-		return redirect('homepage')
-	else:
-		if request.method == 'POST':
-			username = request.POST.get('username')
-			password = request.POST.get('password')
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
 
-			user = authenticate(request, username=username, password=password)
+		user = authenticate(request, username=username, password=password)
 
-			if user is not None:
-				login(request, user)
-				return redirect('homepage')
-			else:
-				messages.info(request, 'Username or Password is incorrect')
+		if user is not None:
+			login(request, user)
+			return redirect('homepage')
+		else:
+			messages.info(request, 'Username or Password is incorrect')
 
-		context = {}
-		return render(request, 'webtimer/login.html', context)
+	context = {}
+	return render(request, 'webtimer/login.html', context)
 
 def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
+@unauthenticated_user
 def registerPage(request):
-	if request.user.is_authenticated:
-		return redirect('homepage')
-	else:
-		form = CreateUserForm()
-		if request.method == 'POST':
-			form = CreateUserForm(request.POST)
-			if form.is_valid():
-				form.save()
-				user = form.cleaned_data.get('username')
-				messages.success(request, 'Account was created for '+ user)
-				return redirect('login')
-		context = {"form":form}
-		return render(request, 'webtimer/register.html', context)
+	
+	form = CreateUserForm()
+	if request.method == 'POST':
+		form = CreateUserForm(request.POST)
+		if form.is_valid():
+			saving = form.save()
+			group = Group.objects.get(name='costumer')
+			saving.groups.add(group)
+			user = form.cleaned_data.get('username')
+			messages.success(request, 'Account was created for '+ user)
+			return redirect('login')
+	context = {"form":form}
+	return render(request, 'webtimer/register.html', context)

@@ -27,7 +27,7 @@ urlpatterns = [
     path('web-detail/', web_detail_view),
     path('web-history/', web_timer_history_view, name="history"),
     path('speedtest/', netvelocity_view, name="speedtest"),
-    # path('speedtest/speed_count', speed_count),
+    path('speedtest/speed_count', speed_count),
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name='logout'),
     path('register/', registerPage, name='register'),
