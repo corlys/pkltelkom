@@ -24,7 +24,7 @@
 					</div>
 					<div class="card-stacked">
 						<div class="card-content">
-							<h5>{{item.time}} Sec</h5>
+							<div id="second-wrapper"><p>{{item.time}} Sec</p></div>
 						</div>
 						<div class="card-action">
 							<a target="_blank" href="{{item.urls}}">{{item.title}}</a>
@@ -34,6 +34,9 @@
 			</div>
 			{% endif %}
 			{% endfor %}
+		</div>
+		<div class="full-width purple darken-1" id="home_graph_title">
+			<h1>Graph</h1>
 		</div>
 		<div class="home-chart">
 			<canvas id="myChart" width="400" height="400"></canvas>

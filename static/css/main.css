@@ -10,6 +10,12 @@ main {
 	flex: 1 0 auto;
 }
 
+/**/
+
+p, li, span, label, input, textarea, a{
+	font-family: 'Roboto Mono', monospace;
+}
+
 /* NAVBAR */
 
 .brand-logo h5{
@@ -21,6 +27,15 @@ main {
 
 .brand-logo h5 span{
 	font-weight: 800;
+}
+
+/*footer*/
+
+.footer-copyright .container{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
 }
 
 /*home*/
@@ -35,9 +50,37 @@ main {
 	padding-top: 50px;
 }
 
+.home-chart{
+	width: 70%;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	margin: 0 auto;
+}
+
 .first-load, .featured-web{
 	display: flex;
 	flex-flow: row wrap;
+}
+
+#second-wrapper{
+	height: 100%;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+}
+
+#home_graph_title{
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#home_graph_title h1{
+	color: white;
 }
 
 /*history*/
@@ -58,10 +101,19 @@ main {
 
 /*speedtest*/
 
+#speedresult{
+	padding-top: 200px;
+	padding-bottom: 50px;
+}
+
+#speedtest{
+	font-family: 'Roboto Mono', monospace;
+}
+
 #speedtest-content {
 	margin-top: 100px;
 }
 
-.card-panel h5, .card-panel h3, .card-panel span{
+.card-panel h5, .card-panel p, .card-panel span{
 	color: white;
 }
