@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home, loginPage, logoutUser, registerPage
 from netvelotest.views import netvelocity_view, speed_count
@@ -31,4 +31,5 @@ urlpatterns = [
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name='logout'),
     path('register/', registerPage, name='register'),
+    path('api/', include('webtimer.urls'))
 ]

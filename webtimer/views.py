@@ -4,11 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
-from django.core import serializers
+from django.core import serializers as coreSerializers
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .models import *
 from .forms import CreateUserForm
 from .decorators import unauthenticated_user
+from .serializers import WebSerializer
 # from .forms import WebtimerForm, RawWebtimerForm
 
 # WebVisit.py Danar
@@ -55,7 +59,7 @@ def request_home(request):
 	obj = Webtimer.objects.all()
 	loadtime_counter(obj);
 
-	data = serializers.serialize('json', obj)
+	data = coreSerializers.serialize('json', obj)
 
 	return HttpResponse(data, content_type="application/json")
 
@@ -80,33 +84,6 @@ def web_detail_view(request):
 		'objects':get_objects
 	}
 	return render(request, 'webtimer/webtimer_detail.html', context)
-
-# def web_detail_create_view(request):
-
-# 	form = WebtimerForm(request.POST)
-# 	if form.is_valid():
-# 		form.save()
-# 		print(request.POST)
-# 		form = WebtimerForm(request.POST)
-
-# 	obj = Webtimer.objects.get(id=1)
-# 	context = {
-# 		'form' : form
-# 	}
-# 	return render(request, 'webtimer/webtimer_create.html', context)
-
-# def web_detail_create_view(request):
-# 	form = RawWebtimerForm()
-# 	if request.method == "POST":
-# 		form = RawWebtimerForm(request.POST)
-# 		if form.is_valid():
-# 			form.save()
-
-# 	# obj = Webtimer.objects.get(id=1)
-# 	context = {
-# 		'form' : form
-# 	}
-# 	return render(request, 'webtimer/webtimer_create.html', context)		
 
 # Suplimentary Methods
 
@@ -163,3 +140,78 @@ def registerPage(request):
 			return redirect('login')
 	context = {"form":form}
 	return render(request, 'webtimer/register.html', context)
+
+
+# APIs
+@api_view(['GET'])
+def apiOverview(request):
+	api_urls = {
+		'List':'/web-list/',
+	}
+	return Response(api_urls)
+
+
+@api_view(['GET'])
+def webList(request):
+	webs = Webtimer.objects.all()
+	serializer = WebSerializer(webs, many=True)
+	return Response(serializer.data)
+
+@api_view(['GET'])
+def webDetail(request, pk):
+	webs = Webtimer.objects.get(id=pk)
+	serializer = WebSerializer(webs, many=False)
+	return Response(serializer.data)
+
+@api_view(['POST'])
+def webCreate(request):
+	serializer = WebSerializer(data = request.data)
+	if serializer.is_valid():
+		serializer.save()
+	return Response(serializer.data)
+
+@api_view(['POST'])
+def webUpdate(request, pk):
+	web = Webtimer.objects.get(id=pk)
+	serializer = WebSerializer(instance=web, data=request.data)
+
+	if serializer.is_valid():
+		serializer.save()
+
+	return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def webDelete(request, pk):
+	web = Webtimer.objects.get(id=pk)
+	web.delete()
+
+	return Response('Item succsesfully delete!')
+
+
+# def web_detail_create_view(request):
+
+# 	form = WebtimerForm(request.POST)
+# 	if form.is_valid():
+# 		form.save()
+# 		print(request.POST)
+# 		form = WebtimerForm(request.POST)
+
+# 	obj = Webtimer.objects.get(id=1)
+# 	context = {
+# 		'form' : form
+# 	}
+# 	return render(request, 'webtimer/webtimer_create.html', context)
+
+# def web_detail_create_view(request):
+# 	form = RawWebtimerForm()
+# 	if request.method == "POST":
+# 		form = RawWebtimerForm(request.POST)
+# 		if form.is_valid():
+# 			form.save()
+
+# 	# obj = Webtimer.objects.get(id=1)
+# 	context = {
+# 		'form' : form
+# 	}
+# 	return render(request, 'webtimer/webtimer_create.html', context)		

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # own
+    'rest_framework',
     'webtimer.apps.WebtimerConfig',
     'netvelotest',
 
