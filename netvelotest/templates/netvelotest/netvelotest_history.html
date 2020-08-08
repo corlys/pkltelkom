@@ -24,11 +24,14 @@
 			<div class="col s12">
 				<div class="indigo lighten-3">
 					<div class="history-box">
+						<div class="speed-hist-title">
+								<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">{{item.name}}</label>
+							</div>
 						<div class="col s12 m6">
 							<div class="card hoverable">
 								<div class="card-content">
 									<div class="card-header center-align">
-										<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">{{item.title}} Download and Upload</label>
+										<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">Download and Upload</label>
 									</div>
 									<div class="divider"></div>
 									<canvas id="{{item.name}}-DU"></canvas>
@@ -40,7 +43,7 @@
 							<div class="card hoverable">
 								<div class="card-content">
 									<div class="card-header center-align">
-										<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">{{item.title}} PING</label>
+										<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">PING</label>
 									</div>
 									<div class="divider"></div>
 									<canvas id="{{item.name}}-PING"></canvas>

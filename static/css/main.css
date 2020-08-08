@@ -134,3 +134,9 @@ ul.dropdown-content li a {
 	justify-content: space-around;
 	flex-flow: row wrap;
 }
+
+.speed-hist-title{
+	width: 100%;
+	display: grid;
+	justify-content: center;
+}
