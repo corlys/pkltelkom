@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
+from datetime import datetime, date 
 
 from .models import Netvelocity, SpeedHistory
 
@@ -21,13 +22,29 @@ def netvelocity_view(request):
 
 @login_required(login_url='login')
 def netvelocity_history(request):
-	hist = SpeedHistory.objects.all()
-	serv = Netvelocity.objects.filter(featured=True)
+	format = '%d %B %Y'
+	if request.method == 'POST':
+		tanggal = request.POST['tanggal']
+		datetime_str = datetime.strptime(tanggal, format)
+		# print(tanggal)
+		hist = SpeedHistory.objects.filter(captured_date__date = datetime_str)
+		serv = Netvelocity.objects.all()
+
+		context = {
+			'hist':hist,
+			'serv':serv
+		}
+		
+		return render(request, 'netvelotest/netvelotest_history.html', context)
+
+	hist = SpeedHistory.objects.filter(captured_date__date = datetime.now())
+	serv = Netvelocity.objects.all()
 
 	context = {
 		'hist':hist,
 		'serv':serv
 	}
+
 	return render(request, 'netvelotest/netvelotest_history.html', context)
 
 def speed_count(request):

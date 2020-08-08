@@ -22,8 +22,8 @@
 			</div>
 			{% for item in serv %}
 			<div class="col s12">
-				<div class="speed-box indigo lighten-3">
-					<div class="row">
+				<div class="indigo lighten-3">
+					<div class="history-box">
 						<div class="col s12 m6">
 							<div class="card hoverable">
 								<div class="card-content">
@@ -31,7 +31,7 @@
 										<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">{{item.title}} Download and Upload</label>
 									</div>
 									<div class="divider"></div>
-									<canvas id="{{item.title}}downandup"></canvas>
+									<canvas id="{{item.name}}-DU"></canvas>
 								</div>
 							</div>
 						</div>
@@ -43,7 +43,7 @@
 										<label style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">{{item.title}} PING</label>
 									</div>
 									<div class="divider"></div>
-									<canvas id="{{item.title}}downandup"></canvas>
+									<canvas id="{{item.name}}-PING"></canvas>
 								</div>
 							</div>
 						</div>
@@ -72,23 +72,35 @@
 		M.Datepicker.init(Calender,{
 			format:'dd mmmm yyyy'
 		})
-		{% for item in web %}
-		{% if item.featured %}
+		{% for item in serv %}
 		var randomR = Math.floor((Math.random() * 130) + 100);
 		var randomG = Math.floor((Math.random() * 130) + 100);
 		var randomB = Math.floor((Math.random() * 130) + 100);
-		var ctx = document.getElementById('{{item.title}}Chart').getContext('2d');
+
+		var randomRR = Math.floor((Math.random() * 130) + 100);
+		var randomGG = Math.floor((Math.random() * 130) + 100);
+		var randomBB = Math.floor((Math.random() * 130) + 100);
+
+		var ctx = document.getElementById('{{item.name}}-DU').getContext('2d');
 		var myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
-				labels: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
+				labels: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
 				datasets: [{
-					label: '# Seconds',
-					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.loadtime}}',{% endif %}{% endfor %}],
+					label: '# Download',
+					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.download}}',{% endif %}{% endfor %}],
 					backgroundColor:"rgb(" 
 					+ (randomR - 80) + ", " 
 					+ (randomG - 80) + ", " 
 					+ (randomB - 80) + ", 0.4)",
+				},
+				{
+					label: '# Upload',
+					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.upload}}',{% endif %}{% endfor %}],
+					backgroundColor:"rgb(" 
+					+ (randomRR - 80) + ", " 
+					+ (randomGG - 80) + ", " 
+					+ (randomBB - 80) + ", 0.4)",
 				}]
 			},
 			options: {
@@ -101,7 +113,31 @@
 				}
 			}
 		});
-		{% endif %}
+
+		var cxx = document.getElementById('{{item.name}}-PING').getContext('2d');
+		var myChart = new Chart(cxx, {
+			type: 'line',
+			data: {
+				labels: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
+				datasets: [{
+					label: '# Download',
+					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.ping}}',{% endif %}{% endfor %}],
+					backgroundColor:"rgb(" 
+					+ (randomR - 80) + ", " 
+					+ (randomG - 80) + ", " 
+					+ (randomB - 80) + ", 0.4)",
+				},]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
 		{% endfor %}
 	});
 </script>

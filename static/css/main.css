@@ -125,3 +125,12 @@ ul.dropdown-content li a {
 .card-panel h5, .card-panel p, .card-panel span{
 	color: white;
 }
+
+/*history speedtest*/
+
+.history-box{
+	margin: 10px;
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row wrap;
+}
