@@ -8,8 +8,8 @@
 <!-- <div class="parallax-container">
 	<div class="parallax" style="z-index: 15;"><img src="http://materializecss.com/templates/parallax-template/background1.jpg"></div>
 </div> -->
-<div class="title purple darken-1">
-	<h1 class="center-align">Loadtime Counter</h1>
+<div class="title indigo darken-1">
+	<h1 class="center-align" style="font-family:Bebas neue;font-size:60px">Loadtime Counter</h1>
 </div>	
 <div class="container">
 	<div class="row">
@@ -24,10 +24,10 @@
 					</div>
 					<div class="card-stacked">
 						<div class="card-content">
-							<div id="second-wrapper"><p>{{item.time}} Sec</p></div>
+							<div id="second-wrapper"><p style="color:#37474f;font-family:Abel;font-size:25px">{{item.time}} Sec</p></div>
 						</div>
 						<div class="card-action">
-							<a target="_blank" href="{{item.urls}}">{{item.title}}</a>
+							<a  target="_blank" style="color:#5c6bc0;font-family:Bebas neue;font-size:28px" href="{{item.urls}}">{{item.title}}</a>
 						</div>
 					</div>
 				</div>
@@ -35,8 +35,8 @@
 			{% endif %}
 			{% endfor %}
 		</div>
-		<div class="full-width purple darken-1" id="home_graph_title">
-			<h1>Graph</h1>
+		<div class="full-width indigo darken-1" id="home_graph_title">
+			<h1 class="center-align" style="font-family:Bebas neue;font-size:60px">Grafik</h1>
 		</div>
 		<div class="home-chart">
 			<canvas id="myChart" width="400" height="400"></canvas>

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 
-from .models import Netvelocity
+from .models import Netvelocity, SpeedHistory
 
 
 
@@ -18,6 +18,17 @@ def netvelocity_view(request):
 		'objects': obj
 	}
 	return render(request, 'netvelotest/netvelotest_view.html', context)
+
+@login_required(login_url='login')
+def netvelocity_history(request):
+	hist = SpeedHistory.objects.all()
+	serv = Netvelocity.objects.filter(featured=True)
+
+	context = {
+		'hist':hist,
+		'serv':serv
+	}
+	return render(request, 'netvelotest/netvelotest_history.html', context)
 
 def speed_count(request):
 	if request.method == 'GET':

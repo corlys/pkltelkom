@@ -16,6 +16,14 @@ p, li, span, label, input, textarea, a{
 	font-family: 'Roboto Mono', monospace;
 }
 
+ul.dropdown-content.select-dropdown li span {
+    color: #000; /* no need for !important :) */
+}
+
+ul.dropdown-content li a {
+	color: #3949ab;
+}
+
 /* NAVBAR */
 
 .brand-logo h5{

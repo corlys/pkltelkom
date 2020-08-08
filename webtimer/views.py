@@ -20,8 +20,10 @@ from .serializers import WebSerializer
 # from selenium import webdriver
 # from selenium.webdriver.support.ui import WebDriverWait
 
+from datetime import datetime, date 
 import urllib.request as urllib2
 from time import time
+
 
 # Create your views here.
 @login_required(login_url='login')
@@ -66,7 +68,22 @@ def request_home(request):
 
 @login_required(login_url='login')
 def web_timer_history_view(request):
-	obj = History.objects.all()
+	format = '%d %B %Y'
+	if request.method == 'POST':
+		tanggal = request.POST['tanggal']
+		datetime_str = datetime.strptime(tanggal, format)
+  		# print(tanggal)
+		obj = History.objects.filter(captured_date__date = datetime_str)
+		objects = Webtimer.objects.all()
+
+		context = {
+			'hist':obj,
+			'web':objects
+		}
+		
+		return render(request, "webtimer/webtimer_history.html", context)
+
+	obj = History.objects.filter(captured_date__date = datetime.now())
 	objects = Webtimer.objects.all()
 
 	context = {

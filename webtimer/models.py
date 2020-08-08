@@ -6,7 +6,7 @@ from datetime import datetime, date
 class Webtimer(models.Model):
 	title		= models.CharField(max_length=120, null=True)
 	urls		= models.CharField(max_length=120, null=True)
-	time		= models.DecimalField(decimal_places=3, max_digits=65, default=0, null=True) 
+	time		= models.DecimalField(decimal_places=3, max_digits=65, null=True) 
 	summary		= models.TextField(null=True)
 	featured 	= models.BooleanField(default=True, null=True)
 
@@ -22,7 +22,7 @@ class History(models.Model):
 	
 	def save(self, *args, **kwargs):
 		if not self.id:
-			self.captured_date = timezone.localtime()
+			self.captured_date = datetime.now()
 
 		return super(History, self).save(*args, **kwargs)
 

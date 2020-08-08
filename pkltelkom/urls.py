@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home, loginPage, logoutUser, registerPage
-from netvelotest.views import netvelocity_view, speed_count
+from netvelotest.views import netvelocity_view, speed_count, netvelocity_history
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('web-detail/', web_detail_view),
     path('web-history/', web_timer_history_view, name="history"),
     path('speedtest/', netvelocity_view, name="speedtest"),
+    path('speedtest-history/', netvelocity_history, name="speedtest-history"),
     path('speedtest/speed_count', speed_count),
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name='logout'),

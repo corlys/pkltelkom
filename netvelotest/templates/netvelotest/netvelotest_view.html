@@ -3,50 +3,58 @@
 
 
 {% block content %}
-<div class="title purple darken-1">
-	<h1 class="center-align">Speedtest</h1>
+<div class="title indigo darken-1">
+	<h1 class="center-align" style="font-family:Bebas neue;font-size:60px">Speedtest</h1>
 </div>	
 <div class="container" id="speedtest-content">
 	<div class="row">
 		<div class="col s12 m6 input-field">
 			<select>
-				<option value="" disabled selected>Choose your option</option>
+				<option style="color:#37474f;font-family:Abel;font-size:25px" value="" disabled selected>Opsi Server</option>
 				{% for item in objects %}
-				<option value={{item.server}}>{{item.name}}</option>
+				<option style="color:#37474f;font-family:Abel;font-size:25px" value={{item.server}}>{{item.name}}</option>
 				{% endfor %}
 			</select>
-			<label>Pilih Server</label>
+			<label style="color:#3f51b5;font-family:Abel;font-size:18px">Pilih Server</label>
 		</div>
 		<div class="col s12 m6 center-align">
-			<button id="speedtest" class="btn waves-effect waves-light purple lighten-1" type="submit" name="action">Submit
-				<i class="material-icons right">send</i>
+			<button id="speedtest" class="btn-large waves-effect waves-light indigo" type="submit" name="action" style="font-family:Bebas Neue;font-size:30px">Start
+				<i class="material-icons right" >send</i>
 			</button>
 		</div>
 		<div class="col s12"></div>
 		<div class="col s12 center-align loading"><img src="{% static '/images/loading.svg' %}"></div>
 		<div class="row" id="speedresult">
 			<div class="col s12 m3">
-				<div class="card-panel purple lighten-3">
-					<h5 class="center-align">Download :</h5>
-					<p id="download" class="center-align"></p>
+				<div class="card-panel indigo ">
+					<h5 class="center-align" style="font-family:Bebas Neue;font-size:30px">
+						<i class="material-icons" style="font-size:32px">arrow_downward</i>Download
+					</h5>
+					<p id="download" class="center-align" style="color:#51B53F;font-family:Abel;font-size:25px"></p>
 				</div>
 			</div>
 			<div class="col s12 m3">
-				<div class="card-panel purple lighten-3">
-					<h5 class="center-align">Upload :</h5>
-					<p id="upload" class="center-align"></p>
+				<div class="card-panel indigo ">
+					<h5 class="center-align" style="font-family:Bebas Neue;font-size:30px">
+						<i class="material-icons" style="font-size:32px">arrow_upward</i>Upload
+					</h5>
+					<p id="upload" class="center-align" style="color:#51B53F;font-family:Abel;font-size:25px"></p>
 				</div>
 			</div>
 			<div class="col s12 m3">
-				<div class="card-panel purple lighten-3">
-					<h5 class="center-align">Ping :</h5>
-					<p id="ping" class="center-align"></p>
+				<div class="card-panel indigo ">
+					<h5 class="center-align" style="font-family:Bebas Neue;font-size:30px">
+						<i class="material-icons" style="font-size:32px">av_timer</i>Ping
+					</h5>
+					<p id="ping" class="center-align" style="color:#51B53F;font-family:Abel;font-size:25px"></p>
 				</div>
 			</div>
 			<div class="col s12 m3">
-				<div class="card-panel purple lighten-3">
-					<h5 class="center-align">ISP :</h5>
-					<p id="isp" class="center-align"></p>
+				<div class="card-panel indigo ">
+					<h5 class="center-align" style="font-family:Bebas Neue;font-size:30px">
+						<i class="material-icons" style="font-size:32px">language</i>ISP
+					</h5>
+					<p id="isp" class="center-align" style="color:#51B53F;font-family:Abel;font-size:25px"></p>
 				</div>
 			</div>
 		</div>
@@ -72,9 +80,9 @@
 					$('#speedtest').prop('disabled', false);
 					$('.loading').hide();
 					$('#speedresult').show();
-					$('#download').text(data.download+'Mbps');
-					$('#upload').text(data.upload+'Mbps');
-					$('#ping').text(data.ping+'Ms');
+					$('#download').text(data.download+' Mbps');
+					$('#upload').text(data.upload+' Mbps');
+					$('#ping').text(data.ping+' Ms');
 					$('#isp').text(data.isp);
 				}
 			});
