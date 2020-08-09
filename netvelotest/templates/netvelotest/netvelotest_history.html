@@ -91,7 +91,7 @@
 				labels: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
 				datasets: [{
 					label: '# Download',
-					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.download}}',{% endif %}{% endfor %}],
+					data: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.download}}',{% endif %}{% endfor %}],
 					backgroundColor:"rgb(" 
 					+ (randomR - 80) + ", " 
 					+ (randomG - 80) + ", " 
@@ -99,7 +99,7 @@
 				},
 				{
 					label: '# Upload',
-					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.upload}}',{% endif %}{% endfor %}],
+					data: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.upload}}',{% endif %}{% endfor %}],
 					backgroundColor:"rgb(" 
 					+ (randomRR - 80) + ", " 
 					+ (randomGG - 80) + ", " 
@@ -124,7 +124,7 @@
 				labels: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
 				datasets: [{
 					label: '# PING',
-					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.ping}}',{% endif %}{% endfor %}],
+					data: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.ping}}',{% endif %}{% endfor %}],
 					backgroundColor:"rgb(" 
 					+ (randomR - 80) + ", " 
 					+ (randomG - 80) + ", " 

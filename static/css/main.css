@@ -107,10 +107,9 @@ ul.dropdown-content li a {
 	margin-right: -50vw;
 }
 
-@media screen and (max-width: 500px) {
-	body {
-		background-color: lightgreen;
-	}
+.modal-checkboxes{
+	display: flex;
+	flex-flow: column wrap;
 }
 
 /*speedtest*/

@@ -32,6 +32,13 @@ def web_timer_home_view(request):
 	# PATH = r"C:\Users\Duscae\Documents\Python Scripts"
 	# driver = webdriver.Firefox()
 
+	if request.method == 'POST':
+		if request.POST.getlist('filtered-websites[]'):
+			websitelists = request.POST.getlist('filtered-websites[]');
+			print(websitelists)
+			Webtimer.objects.filter(title__in=websitelists).update(featured=True)
+			Webtimer.objects.exclude(title__in=websitelists).update(featured=False)
+
 	obj = Webtimer.objects.all()
 
 
@@ -57,25 +64,26 @@ def web_timer_home_view(request):
 	}
 	return render(request, 'webtimer/webtimer_home.html', context)
 
-def request_home(request):
-	obj = Webtimer.objects.all()
-	loadtime_counter(obj);
-
-	data = coreSerializers.serialize('json', obj)
-
-	return HttpResponse(data, content_type="application/json")
-
 
 @login_required(login_url='login')
 def web_timer_history_view(request):
 	format = '%d %B %Y'
 	if request.method == 'POST':
-		tanggal = request.POST['tanggal']
-		datetime_str = datetime.strptime(tanggal, format)
-  		# print(tanggal)
-		obj = History.objects.filter(captured_date__date = datetime_str)
+		if request.POST.getlist('filtered-websites[]'):
+			websitelists = request.POST.getlist('filtered-websites[]');
+			print(websitelists)
+			Webtimer.objects.filter(title__in=websitelists).update(featured=True)
+			Webtimer.objects.exclude(title__in=websitelists).update(featured=False)
+
+
+		tanggal = request.POST.get('tanggal', False)
+		obj = History.objects.filter(captured_date__date = datetime.now())
 		objects = Webtimer.objects.all()
 
+		if tanggal:
+			datetime_str = datetime.strptime(tanggal, format)
+			obj = History.objects.filter(captured_date__date = datetime_str)
+			objects = Webtimer.objects.all()
 		context = {
 			'hist':obj,
 			'web':objects
@@ -120,6 +128,14 @@ def loadtime_counter(links):
 		finally:
 			link.time = elapsed_time
 			link.save()
+
+def request_home(request):
+	obj = Webtimer.objects.all()
+	loadtime_counter(obj);
+
+	data = coreSerializers.serialize('json', obj)
+
+	return HttpResponse(data, content_type="application/json")
 
 @unauthenticated_user
 def loginPage(request):
