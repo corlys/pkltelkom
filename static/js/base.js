@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    console.log("ready!");
+    $('.collapsible').collapsible();
     $('.sidenav').sidenav();
     $('.parallax').parallax();
     $('.fixed-action-btn').floatingActionButton();

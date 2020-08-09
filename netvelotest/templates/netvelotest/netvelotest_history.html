@@ -10,12 +10,12 @@
 			<div class="col s12">
 				<form action='' method='POST'>
 					{% csrf_token %}
-					<div class="input-field col s10">
+					<div class="input-field col s9 m10">
 						<input type="text" class="datepicker" name="tanggal">
 					</div>
-					<div class="col s2">
+					<div class="col s3 m2">
 						<button id="historyfilter" class="btn-large waves-effect waves-light indigo" type="submit" name="action" style="font-family:Bebas Neue;font-size:30px">Cari
-							<i class="material-icons right" >send</i>
+							<i class="material-icons right" >search</i>
 						</button>
 					</div>
 				</form>
@@ -123,7 +123,7 @@
 			data: {
 				labels: [{% for obj in hist %}{% if item.name == obj.speedtest_server.name %}'{{obj.captured_date|date:"H:i"}}',{% endif %}{% endfor %}],
 				datasets: [{
-					label: '# Download',
+					label: '# PING',
 					data: [{% for obj in hist %}{% if item.title == obj.webtimer.title %}'{{obj.ping}}',{% endif %}{% endfor %}],
 					backgroundColor:"rgb(" 
 					+ (randomR - 80) + ", " 

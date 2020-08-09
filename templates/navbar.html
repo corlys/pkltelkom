@@ -3,7 +3,9 @@
 <header>
 	<nav class="indigo darken-1">
 		<div class="nav-wrapper container">
-			<a href="{% url 'homepage' %}" class="brand-logo" ><h5 class="web-logo" style="font-family:Abel;font-size:35px">PKL<span style="font-family:Bebas neue;font-size:35px">TELKOM</span></h5></a>
+			<a href="{% url 'homepage' %}" class="brand-logo" >
+				<h5 class="web-logo" style="font-family:Abel;font-size:35px">PKL<span style="font-family:Bebas neue;font-size:35px">TELKOM</span></h5>
+			</a>
 			<a href="#" class="sidenav-trigger" data-target="mobile-links">
 				<i class="material-icons">menu</i>
 			</a>
@@ -24,23 +26,42 @@
 			</ul>
 			<ul id="dropdown1" class="dropdown-content">
 				<li><a style="font-family:Abel;font-size:20px" href="{% url 'history' %}">Web</a></li>
-				<li><a style="font-family:Abel;font-size:20px" href="{% url 'speedtest-history' %}">Speedtest</a></li>	
+				<li><a style="font-family:Abel;font-size:20px" href="{% url 'speedtest-history' %}">Speedtest</a></li>
 			</ul>
 		</div>
 	</nav>
 
 	<ul class="sidenav" id="mobile-links">
-		<li><a style="font-family:Abel;font-size:20px" href="{% url 'homepage' %}">
-					<i class="material-icons left" >timer</i>Web Timer</a></li>
+		<li>
+			<a style="font-family:Abel;font-size:20px" href="{% url 'homepage' %}">
+			<i class="material-icons left" >timer</i>Web Timer</a>
+		</li>
 
-				<li><a style="font-family:Abel;font-size:20px" href="{% url 'history' %}">
-					<i class="material-icons left" >restore</i>History</a></li>
+		<li>
+	        <ul class="collapsible">
+	          	<li>
+	            	<a class="collapsible-header" style="font-family:Abel;font-size:20px"><i class="material-icons left">arrow_drop_down</i>History</a>
+	        		<div class="collapsible-body">
+	          			<ul>
+			                <li><a style="font-family:Abel;font-size:20px" href="{% url 'history' %}">Web</a></li>
+							<li><a style="font-family:Abel;font-size:20px" href="{% url 'speedtest-history' %}">Speedtest</a></li>
+			            </ul>
+	        		</div>
+	          	</li>
+	        </ul>
+	    </li>
 
-				<li><a style="font-family:Abel;font-size:20px" href="{% url 'speedtest' %}">
-					<i class="material-icons left" >network_check</i>Speed Test</a></li>
+		<li>
+			<a style="font-family:Abel;font-size:20px" href="{% url 'speedtest' %}">
+			<i class="material-icons left" >network_check</i>Speed Test</a>
+		</li>
 
-				<li><a style="font-family:Abel;font-size:20px" href="{% url 'logout' %}">
-					<i class="material-icons left" >input</i>Logout</a></li>
+		<li>
+			<a style="font-family:Abel;font-size:20px" href="{% url 'logout' %}">
+			<i class="material-icons left" >input</i>Logout</a>
+		</li>
+
+		
 		<!-- <li><a href="#">Login</a></li> -->
 	</ul>	
 </header>

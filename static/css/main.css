@@ -17,7 +17,7 @@ p, li, span, label, input, textarea, a{
 }
 
 ul.dropdown-content.select-dropdown li span {
-    color: #000; /* no need for !important :) */
+	color: #000; /* no need for !important :) */
 }
 
 ul.dropdown-content li a {
@@ -107,6 +107,12 @@ ul.dropdown-content li a {
 	margin-right: -50vw;
 }
 
+@media screen and (max-width: 500px) {
+	body {
+		background-color: lightgreen;
+	}
+}
+
 /*speedtest*/
 
 #speedresult{
@@ -130,6 +136,7 @@ ul.dropdown-content li a {
 
 .history-box{
 	margin: 10px;
+	border-radius: 25%;
 	display: flex;
 	justify-content: space-around;
 	flex-flow: row wrap;
