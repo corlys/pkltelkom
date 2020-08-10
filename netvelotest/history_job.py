@@ -3,6 +3,7 @@ import threading
 import speedtest as st
 
 
+
 from .models import SpeedHistory, Netvelocity
 
 def update_history():

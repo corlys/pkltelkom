@@ -5,5 +5,5 @@ from webtimer import history_job
 
 def start():
 	scheduler = BackgroundScheduler()
-	scheduler.add_job(history_job.update_history, 'interval', minutes=20)
+	scheduler.add_job(history_job.update_history, 'interval', minutes=1)
 	scheduler.start()
