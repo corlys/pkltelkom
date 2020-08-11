@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home, loginPage, logoutUser, registerPage
-from netvelotest.views import netvelocity_view, speed_count, netvelocity_history
+from webtimer.views import web_detail_view, web_timer_home_view, web_timer_history_view, request_home, loginPage, logoutUser, registerPage, export_web_history_csv
+from netvelotest.views import netvelocity_view, speed_count, netvelocity_history, export_speedtest_history_csv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,5 +32,7 @@ urlpatterns = [
     path('login/', loginPage, name='login'),
     path('logout/', logoutUser, name='logout'),
     path('register/', registerPage, name='register'),
-    path('api/', include('webtimer.urls'))
+    path('api/', include('webtimer.urls')),
+    path('export/loadtime', export_web_history_csv, name='export-loadtime-csv'),
+    path('export/speedtest', export_speedtest_history_csv, name='export-speedtest-csv'),
 ]
