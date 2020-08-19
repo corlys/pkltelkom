@@ -21,6 +21,7 @@
 				</form>
 			</div>
 			{% for item in serv %}
+			{% if item.featured %}
 			<div class="col s12">
 				<div class="indigo lighten-3">
 					<div class="history-box">
@@ -64,15 +65,42 @@
 					</div>
 				</div>
 			</div> -->
+			{% endif %}
 			{% endfor %}
 		</div>
 	</div>
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal modal-fixed-footer">
+		<form action='' method='POST'>
+			{% csrf_token %}
+			<div class="modal-content">
+				<div class="container modal-checkboxes">
+					<h4 class="center-align" style="color:#5c6bc0;font-family:Bebas neue;font-size:28px">Select Website To Display</h4>
+					{% for item in serv %}
+					<p>
+						<label>
+							<input type="checkbox" {% if item.featured %} checked="checked" {% endif %} name="filtered-servers[]" value="{{item.name}}">
+							<span>{{item.name}}</span>
+						</label>
+					</p>
+					{% endfor %}	
+				</div>
+			</div>
+			<div class="modal-footer">
+				<!-- <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a> -->
+				<button id="websitefilter" class="btn-small waves-effect waves-light indigo" type="submit" name="action" style="font-family:Bebas Neue;font-size:20px">Submit
+					<i class="material-icons right" >send</i>
+				</button>
+			</div>
+		</form>
+	</div>
 	<div class="fixed-action-btn">
 		<a class="btn-floating btn-large red">
-			<i class="large material-icons">mode_edit</i>
+			<i class="large material-icons">menu</i>
 		</a>
 		<ul>
-			<li><a class="btn-floating yellow darken-1" href="{% url 'export-speedtest-csv' %}"><i class="material-icons">cloud_download</i></a></li>
+			<li><a class="btn-floating red modal-trigger tooltipped" data-position="left" data-tooltip="Filter Server" href="#modal1"><i class="material-icons">insert_chart</i></a></li>
+			<li><a class="btn-floating yellow darken-1 tooltipped" data-position="left" data-tooltip="Download History Speedtest" href="{% url 'export-speedtest-csv' %}"><i class="material-icons">cloud_download</i></a></li>
 		</ul>
 	</div>
 </div>

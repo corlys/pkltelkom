@@ -13,6 +13,7 @@ from .models import *
 from .forms import CreateUserForm
 from .decorators import unauthenticated_user
 from .serializers import WebSerializer
+
 # from .forms import WebtimerForm, RawWebtimerForm
 
 # WebVisit.py Danar
@@ -20,29 +21,29 @@ from .serializers import WebSerializer
 # from selenium import webdriver
 # from selenium.webdriver.support.ui import WebDriverWait
 
-from datetime import datetime, date 
+from datetime import datetime, date
 import urllib.request as urllib2
 import csv
 from time import time
 
 
 # Create your views here.
-@login_required(login_url='login')
+@login_required(login_url="login")
 def web_timer_home_view(request):
     # w_driver = r"\geckodriver.exe"
     # PATH = r"C:\Users\Duscae\Documents\Python Scripts"
     # driver = webdriver.Firefox()
 
-    if request.method == 'POST':
-        if request.POST.getlist('filtered-websites[]'):
-            websitelists = request.POST.getlist('filtered-websites[]');
+    if request.method == "POST":
+        if request.POST.getlist("filtered-websites[]"):
+            websitelists = request.POST.getlist("filtered-websites[]")
             print(websitelists)
             Webtimer.objects.filter(title__in=websitelists).update(featured=True)
             Webtimer.objects.exclude(title__in=websitelists).update(featured=False)
 
     obj = Webtimer.objects.all()
-
-
+    jumlahwebsite = Webtimer.objects.all().count()
+    hist = History.objects.all().order_by("-id")[:jumlahwebsite]
     # for link in obj:
     #     try:
     #         driver.get(link.urls)
@@ -61,57 +62,52 @@ def web_timer_home_view(request):
     # driver.close()
 
     context = {
-        'objects' : obj,
+        "objects": obj,
+        "hist": hist,
     }
-    return render(request, 'webtimer/webtimer_home.html', context)
+    return render(request, "webtimer/webtimer_home.html", context)
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def web_timer_history_view(request):
-    format = '%d %B %Y'
-    if request.method == 'POST':
-        if request.POST.getlist('filtered-websites[]'):
-            websitelists = request.POST.getlist('filtered-websites[]');
+    format = "%d %B %Y"
+    if request.method == "POST":
+        if request.POST.getlist("filtered-websites[]"):
+            websitelists = request.POST.getlist("filtered-websites[]")
             print(websitelists)
             Webtimer.objects.filter(title__in=websitelists).update(featured=True)
             Webtimer.objects.exclude(title__in=websitelists).update(featured=False)
 
-
-        tanggal = request.POST.get('tanggal', False)
-        obj = History.objects.filter(captured_date__date = datetime.now())
+        tanggal = request.POST.get("tanggal", False)
+        obj = History.objects.filter(captured_date__date=datetime.now())
         objects = Webtimer.objects.all()
 
         if tanggal:
             datetime_str = datetime.strptime(tanggal, format)
-            obj = History.objects.filter(captured_date__date = datetime_str)
+            obj = History.objects.filter(captured_date__date=datetime_str)
             objects = Webtimer.objects.all()
-        context = {
-            'hist':obj,
-            'web':objects
-        }
-        
+        context = {"hist": obj, "web": objects}
+
         return render(request, "webtimer/webtimer_history.html", context)
 
-    obj = History.objects.filter(captured_date__date = datetime.now())
+    obj = History.objects.filter(captured_date__date=datetime.now())
     objects = Webtimer.objects.all()
 
-    context = {
-        'hist':obj,
-        'web':objects
-    }
+    context = {"hist": obj, "web": objects}
 
     return render(request, "webtimer/webtimer_history.html", context)
+
 
 def web_detail_view(request):
     obj = Webtimer.objects.all()
     if request.method == "GET":
         get_objects = request.GET
-    context = {
-        'objects':get_objects
-    }
-    return render(request, 'webtimer/webtimer_detail.html', context)
+    context = {"objects": get_objects}
+    return render(request, "webtimer/webtimer_detail.html", context)
+
 
 # Suplimentary Methods
+
 
 def loadtime_counter(links):
     # http = urllib3.PoolManager()
@@ -125,100 +121,110 @@ def loadtime_counter(links):
             output = stream.read()
             end_time = time()
             stream.close()
-            elapsed_time = round(end_time-start_time, 3)
+            elapsed_time = round(end_time - start_time, 3)
         finally:
             link.time = elapsed_time
             link.save()
 
+
 def request_home(request):
     obj = Webtimer.objects.all()
-    loadtime_counter(obj);
+    loadtime_counter(obj)
 
-    data = coreSerializers.serialize('json', obj)
+    data = coreSerializers.serialize("json", obj)
 
     return HttpResponse(data, content_type="application/json")
 
-@login_required(login_url='login')
+
+@login_required(login_url="login")
 def export_web_history_csv(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="web-loadtime-history.csv"'
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="web-loadtime-history.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['id history', 'id web', 'website', 'load time', 'date'])
+    writer.writerow(["id history", "id web", "website", "load time", "date"])
 
-    users = History.objects.all().values_list('id','webtimer', 'webtimer__title', 'loadtime', 'captured_date')
+    users = History.objects.all().values_list(
+        "id", "webtimer", "webtimer__title", "loadtime", "captured_date"
+    )
     for user in users:
         writer.writerow(user)
 
     return response
 
+
 @unauthenticated_user
 def loginPage(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('homepage')
+            return redirect("homepage")
         else:
-            messages.info(request, 'Username or Password is incorrect')
+            messages.info(request, "Username or Password is incorrect")
 
     context = {}
-    return render(request, 'webtimer/login.html', context)
+    return render(request, "webtimer/login.html", context)
+
 
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")
+
 
 @unauthenticated_user
 def registerPage(request):
-    
+
     form = CreateUserForm()
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
             saving = form.save()
-            group = Group.objects.get(name='costumer')
+            group = Group.objects.get(name="costumer")
             saving.groups.add(group)
-            user = form.cleaned_data.get('username')
-            messages.success(request, 'Account was created for '+ user)
-            return redirect('login')
-    context = {"form":form}
-    return render(request, 'webtimer/register.html', context)
+            user = form.cleaned_data.get("username")
+            messages.success(request, "Account was created for " + user)
+            return redirect("login")
+    context = {"form": form}
+    return render(request, "webtimer/register.html", context)
 
 
 # APIs
-@api_view(['GET'])
+@api_view(["GET"])
 def apiOverview(request):
     api_urls = {
-        'List':'/web-list/',
+        "List": "/web-list/",
     }
     return Response(api_urls)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def webList(request):
     webs = Webtimer.objects.all()
     serializer = WebSerializer(webs, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
+
+@api_view(["GET"])
 def webDetail(request, pk):
     webs = Webtimer.objects.get(id=pk)
     serializer = WebSerializer(webs, many=False)
     return Response(serializer.data)
 
-@api_view(['POST'])
+
+@api_view(["POST"])
 def webCreate(request):
-    serializer = WebSerializer(data = request.data)
+    serializer = WebSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
 
-@api_view(['POST'])
+
+@api_view(["POST"])
 def webUpdate(request, pk):
     web = Webtimer.objects.get(id=pk)
     serializer = WebSerializer(instance=web, data=request.data)
@@ -229,12 +235,12 @@ def webUpdate(request, pk):
     return Response(serializer.data)
 
 
-@api_view(['DELETE'])
+@api_view(["DELETE"])
 def webDelete(request, pk):
     web = Webtimer.objects.get(id=pk)
     web.delete()
 
-    return Response('Item succsesfully delete!')
+    return Response("Item succsesfully delete!")
 
 
 # def web_detail_create_view(request):
@@ -262,4 +268,5 @@ def webDelete(request, pk):
 #   context = {
 #       'form' : form
 #   }
-#   return render(request, 'webtimer/webtimer_create.html', context)        
+#   return render(request, 'webtimer/webtimer_create.html', context)
+
