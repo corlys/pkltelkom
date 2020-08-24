@@ -25,11 +25,13 @@
 					<div class="card-stacked">
 						<div class="card-content">
 							<div id="second-wrapper"><p style="color:#37474f;font-family:Abel;font-size:25px">{{item.time}} Sec</p>
-							{% for history in hist %}{% if history.webtimer.title == item.title %}<span style="font-size:10px;"> {{history.captured_date|date:"d-m-Y H:i"}}</span>{% endif %}{% endfor %}
 							</div>
 						</div>
 						<div class="card-action">
-							<a  target="_blank" style="color:#5c6bc0;font-family:Bebas neue;font-size:20px" href="{{item.urls}}">{{item.title}}</a>
+							<div class="home-card-action">
+								<a  target="_blank" style="color:#5c6bc0;font-family:Bebas neue;font-size:20px" href="{{item.urls}}">{{item.title}}</a>
+								{% for history in hist %}{% if history.webtimer.title == item.title %}<span class='last-captured' style="font-size:10px;"> {{history.captured_date|date:"d-m-Y H:i"}}</span>{% endif %}{% endfor %}
+							</div>
 						</div>
 					</div>
 				</div>

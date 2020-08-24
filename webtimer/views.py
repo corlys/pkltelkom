@@ -41,7 +41,7 @@ def web_timer_home_view(request):
             Webtimer.objects.filter(title__in=websitelists).update(featured=True)
             Webtimer.objects.exclude(title__in=websitelists).update(featured=False)
 
-    obj = Webtimer.objects.all()
+    obj = Webtimer.objects.all().order_by("title")
     jumlahwebsite = Webtimer.objects.all().count()
     hist = History.objects.all().order_by("-id")[:jumlahwebsite]
     # for link in obj:

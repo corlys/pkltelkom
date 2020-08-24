@@ -28,7 +28,7 @@ ul.dropdown-content li a {
 
 .brand-logo h5{
 	color: white;
-	height: : 100%;
+	height: 100%;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 200;
 }
@@ -47,6 +47,17 @@ ul.dropdown-content li a {
 }
 
 /*home*/
+.last-captured{
+	display: block;
+}
+
+.home-card-action{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .title{
 	height: 200px;
 	margin-top: -50px;
