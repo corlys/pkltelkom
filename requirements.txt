@@ -6,3 +6,4 @@ six==1.15.0
 speedtest-cli==2.1.2
 sqlparse==0.3.1
 tzlocal==2.1
+djangorestframework==3.11.0
