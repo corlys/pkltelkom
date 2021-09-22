@@ -1,6 +1,6 @@
 APScheduler==3.6.3
 asgiref==3.2.10
-Django==3.0.8
+Django==3.1.13
 pytz==2020.1
 six==1.15.0
 speedtest-cli==2.1.2
